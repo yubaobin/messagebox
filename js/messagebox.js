@@ -35,7 +35,6 @@
                 lineHeight:'30px',
                 autoHide:2000,
                 remove:false,
-                duritionTime:'600ms',
                 border:""
             }
             for (let i in options) {
@@ -47,7 +46,8 @@
             me.msgbox.style.position = 'fixed';
             me.msgbox.style.textAlign = 'center';
             me.msgbox.style.display = 'none';
-            me.msgbox.style.opacity = '0';            
+            me.msgbox.style.opacity = '0';     
+            me.msgbox.style.transition = 'all 600ms';       
             me._refresh();
         },
 
@@ -62,7 +62,6 @@
             me.msgbox.style.lineHeight = me.options.lineHeight;
             me.msgbox.style.border = me.options.border;
             me.msgbox.innerHTML = me.options.message;
-            me.msgbox.style.transition = 'all '+me.options.duritionTime;
         },
 
         show: function(){
@@ -107,7 +106,7 @@
         }
         return tag;
     }
-    //创建唯一元素
+    //创建元素
     function _createEl(tagName){
         let tag = document.createElement(tagName);
         tag.id = 'msg' + Math.random().toString().substr(2, 8);
