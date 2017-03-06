@@ -8,24 +8,64 @@
 </head>
 <body>
     <button onclick="show1()">显示不会删除的</button>
+    <button onclick="hide1()">隐藏</button>
     <button onclick="show2()">显示会删除的</button>
+    <button onclick="bind()">事件绑定</button>
+    <button onclick="unbind()">解除绑定</button>
 </body>
 <script type="text/javascript">
 
+var message = null;
 function show1(){
-	var message = new MsgBox('msg', {
+	message = new MsgBox('msg', {
     	message: 123,
-    	bg:'rgba(243,156,18,0.5)',
-    	border:'1px solid rgba(255,152,0,0.25)'
+    	bgColor:'rgba(243,156,18,0.5)',
+        autoHide:"",
+        shown: function(){
+            console.log("show()完成")
+        },
+        hidden: function(){
+            console.log("hide()完成")
+        }
 	});
 	message.show();
 }
 
+function hide1(){
+    message.hide();
+}
+
 function show2(){
-	var message = new MsgBox('', {
-    	message: 123
-	});
+	var message = new MsgBox('msg1', {
+    	message: 123,
+        autoHide: true,
+        hidden: function(){
+            console.log("hide2()完成")
+        }
+    });
+    message.setOption({message :4456});
 	message.show();
+}
+
+var messagebind = null;
+function bind(){
+   if(!messagebind){
+       messagebind = new MsgBox('msg1', {
+            message: 123,
+            autoHide: true
+        }); 
+        messagebind.on('shown',function(){
+            console.log('显示')
+        })
+        messagebind.on('hidden',function(){
+            console.log('隐藏')
+        })
+    }
+    messagebind.show();
+}
+function unbind(){
+    messagebind.off('shown');
+    messagebind.off('hidden');
 }
 </script>
 
