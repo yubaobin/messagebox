@@ -50,7 +50,7 @@ function show2(){
 var messagebind = null;
 function bind(){
    if(!messagebind){
-       messagebind = new MsgBox('msg1', {
+       messagebind = new MsgBox('msg2', {
             message: 123,
             autoHide: true
         }); 
@@ -67,6 +67,7 @@ function unbind(){
     messagebind.off('shown');
     messagebind.off('hidden');
 }
+
 </script>
 
 </html>

@@ -31,7 +31,6 @@
                 color:"#FFF",                
                 top:"40%",
                 fontSize:'16px',
-                lineHeight:'30px',
                 autoHide:false,
                 border:""
             }
@@ -39,14 +38,14 @@
                 me.options[i] = options[i];
             }
             if(!me.$el) {
-                throw new Error("Can not find the element!");
+                console.error("Can not find the element!");
             }
             me.msgbox.style.width = '100%';
             me.msgbox.style.position = 'fixed';
             me.msgbox.style.textAlign = 'center';
             me.msgbox.style.display = 'none';
             me.msgbox.style.opacity = '0';     
-            me.msgbox.style.transition = 'all 600ms';       
+            me.msgbox.style.transition = 'all 600ms';      
             me._refresh();
         },
 
@@ -55,7 +54,6 @@
             me.msgbox.style.top = me.options.top;
             me.msgbox.style.color = me.options.color;
             me.msgbox.style.fontSize = me.options.fontSize;
-            me.msgbox.style.lineHeight = me.options.lineHeight;
             me.msgbox.innerHTML = `<span style="padding:5px 10px;background-color:${me.options.bgColor};">${me.options.message}</span>`;
         },
 
@@ -64,8 +62,12 @@
             me.msgbox.style.display = '';
             setTimeout(function(){
                 me.msgbox.style.opacity = 1;
-                if(me.options['shown'] && typeof me.options['shown'] == "function"){
-                    me.options['shown'].call(null);
+                if(me.options['shown']){
+                    if(typeof me.options['shown'] == "function"){
+                        me.options['shown'].call(null);
+                    }else {
+                        console.error("shown must be a function!");
+                    }
                 }
             },20)
             if(me.options.autoHide){//自动隐藏
@@ -80,18 +82,22 @@
             me.msgbox.style.opacity = 0;
             setTimeout(function(){
                 me.msgbox.style.display = 'none';
-                if(me.options['hidden'] && typeof me.options['hidden'] == "function"){
-                    me.options['hidden'].call(null);
+                if(me.options['hidden']){
+                    if(typeof me.options['hidden'] == "function"){
+                        me.options['hidden'].call(null);
+                    }else {
+                        console.error("hidden must be a function!");
+                    }
                 }
             },600)
         },
         //移除元素
-        remove: function(el){
-            el.style.opacity = 0;
-            setTimeout(function(){
-                document.querySelector('body').removeChild(el);
-            },600);
-        },
+        // _remove: function(el){
+        //     el.style.opacity = 0;
+        //     setTimeout(function(){
+        //         document.querySelector('body').removeChild(el);
+        //     },600);
+        // },
         setOption: function(options){
             let me = this;
             for (let i in options) {
@@ -103,9 +109,7 @@
         //绑定事件
         on: function(name,callback){
             let me = this
-            if(callback && typeof callback == "function"){
-                me.options[name] = callback;
-            }
+            me.options[name] = callback;
         },
 
         //解除绑定
