@@ -50,8 +50,7 @@
 			<td>hidden</td><td>隐藏的时候调用的方法</td>
 		</tr>
 	</tbody>
-</table><br/>
-
+</table>
 `messagebox.on('shown',function(){...})` <br/>
 `messagebox.on('hidden',function(){...})`
 
